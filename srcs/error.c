@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:52:36 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/29 20:20:18 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/10/30 01:25:57 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int			ft_checkmap(char **map)
 	int j;
 	int start;
 
-	start = 0;
 	i = 0;
 	j = 0;
+	start = 0;
 	while (map[i])
 	{
 		while (map[i][j])
@@ -76,7 +76,7 @@ int			ft_checkmap2(char **map)
 		{
 			if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'N'
 				&& map[i][j] != 'S' && map[i][j] != 'W' && map[i][j] != 'E'
-					&& map[i][j] != ' ' && map[i][j] != '\n')
+					&& map[i][j] != ' ' && map[i][j] != '\n' && map[i][j] != '2')
 			{
 				ft_putstr("Caractere impossible dans la map !\n");
 				return (-1);
@@ -91,27 +91,25 @@ int			ft_checkmap2(char **map)
 int			*ft_colmax(char **map)
 {
 	int i;
-	int j;
 	int *val;
 
 	i = 0;
-	j = 0;
 	if (!(val = malloc((2) * sizeof(*val))))
 	{
 		ft_putstr("Issue during malloc\n");
 		return (NULL);
 	}
+	val[1] = 0;
 	val[0] = 0;
-	while (map[i][j])
+	while (map[val[1]])
 	{
-		j = 0;
-		while (map[i][j] != '\n' && map[i][j])
-			j++;
-		if (j > val[0])
-			val[0] = j;
-		i++;
-	}
-	val[1] = i - 1;
+		i = 0;
+		while (map[val[1]][i] != '\n' && map[val[1]][i])
+			i++;
+		if (i > val[0])
+			val[0] = i;
+		val[1]++;
+	};
 	return (val);
 }
 
@@ -125,6 +123,7 @@ char		**ft_fillmask(char **map)
 	val = ft_colmax(map);
 	if (!(tmp = malloc((val[1] + 1) * sizeof(*tmp))))
 		return (ft_error("Issue during realloc map\n"));
+	i = 0;
 	while (i < val[1])
 	{
 		if (!(tmp[i] = malloc((val[0] + 1) * sizeof(*tmp))))
@@ -150,7 +149,7 @@ char		**ft_deposemask(char **map, char **mask)
 
 	i = 0;
 	j = 0;
-	while (map[i][j])
+	while (map[i])
 	{
 		j = 0;
 		while (map[i][j] != '\n' && map[i][j])
@@ -163,4 +162,26 @@ char		**ft_deposemask(char **map, char **mask)
 	}
 	ft_freetab(map);
 	return (mask);
+}
+
+void		ft_checkfill(char **map)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j] != '\n' && map[i][j])
+		{
+			if (map[i][j] == '0' && (map[i - 1][j] == '5' 
+				|| map[i][j - 1] == '5' || map[i + 1][j] == '5'
+				|| map[i][j + 1] == '5'))
+				ft_putstr("La map est ouverte !\n");
+			j++;
+		}
+		i++;
+	}
 }

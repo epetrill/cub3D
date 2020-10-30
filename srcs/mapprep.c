@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:58:21 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/29 08:31:22 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/10/30 02:34:38 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,74 @@
 
 int			ft_reachc(char *line, t_mapinfo *pinfo)
 {
-	line++;
-	while (*line == ' ')
+	if (pinfo->ceil[0] == -1 && pinfo->ceil[1] == -1 && pinfo->ceil[2] == -1)
+	{
 		line++;
-	pinfo->ceil[0] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
-	line = line + ft_nblen(line);
-	while (*line == ' ')
-		line++;
-	pinfo->ceil[1] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
-	line = line + ft_nblen(line);
-	while (*line == ' ')
-		line++;
-	pinfo->ceil[2] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		while (*line == ' ')
+			line++;
+		pinfo->ceil[0] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		line = line + ft_nblen(line);
+		while (*line == ' ')
+			line++;
+		pinfo->ceil[1] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		line = line + ft_nblen(line);
+		while (*line == ' ')
+			line++;
+		pinfo->ceil[2] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+	}
+	else
+	{
+		ft_putstr("Couleur du ciel en double !\n");
+		return (-2);
+	}
 	return (0);
 }
 
 int			ft_reachres(char *line, t_mapinfo *pinfo)
-{
-	line++;
-	while (*line == ' ')
+{	if (pinfo->res[0] == -1 && pinfo->res[1] == -1)
+	{
 		line++;
-	pinfo->res[0] = ft_atoimod(line, 0);
-	line = line + ft_nblen(line);
-	while (*line == ' ')
-		line++;
-	pinfo->res[1] = ft_atoimod(line, 0);
-	return (1);
+		while (*line == ' ')
+			line++;
+		pinfo->res[0] = ft_atoimod(line, 0);
+		line = line + ft_nblen(line);
+		while (*line == ' ')
+			line++;
+		pinfo->res[1] = ft_atoimod(line, 0);
+		return (1);
+	}
+	else
+	{
+		ft_putstr("Resolution en double !\n");
+		return (-2);
+	}
+	
 }
 
 int			ft_reachf(char *line, t_mapinfo *pinfo)
 {
-	line++;
-	while (*line == ' ')
+	if (pinfo->floor[0] == -1 && pinfo->floor[1] == -1 && pinfo->floor[2] == -1)
+	{
 		line++;
-	pinfo->floor[0] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
-	line = line + ft_nblen(line);
-	while (*line == ' ')
-		line++;
-	pinfo->floor[1] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
-	line = line + ft_nblen(line);
-	while (*line == ' ')
-		line++;
-	pinfo->floor[2] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
-	return (0);
+		while (*line == ' ')
+			line++;
+		pinfo->floor[0] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		line = line + ft_nblen(line);
+		while (*line == ' ')
+			line++;
+		pinfo->floor[1] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		line = line + ft_nblen(line);
+		while (*line == ' ')
+			line++;
+		pinfo->floor[2] = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		return (0);
+	}
+	else
+	{
+		ft_putstr("Couleur du sol en double !\n");
+		return (-2);
+	}
+	
 }
 
 int			ft_reachwall(char *line, t_mapinfo *pinfo, int chx)
@@ -90,5 +115,7 @@ int			ft_reachinf(char *line, t_mapinfo *pinfo)
 		else
 			ret = ft_reachf(line, pinfo);
 	}
+	if (ret < 0)
+		return (-1);
 	return (1);
 }

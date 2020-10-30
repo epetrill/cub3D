@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:48:54 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/29 20:33:24 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/10/30 03:19:11 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,48 +41,62 @@ char	**ft_avoidpar(char **map, int i, int size)
 	char	**map2;
 
 	j = 0;
-	map2 = NULL;
 	if (!(map2 = malloc((size + 1) * sizeof(*map2))))
 		return (ft_error("Issue during malloc map lines"));
 	while (map[i])
 	{
-		map2[j] = ft_strdup(map[i]);
+		//printf("OUI\n");
+		ft_strcpy(map2[j], map[i]);
+		//printf("NON\n");
 		i++;
 		j++;
 	}
-	map2[size] = NULL;
-	//map = ft_freetab(map); //erreur "double free..."
+	map2[j] = NULL;
+	ft_freetab(map);
 	return (map2);
 }
 
-int		ft_coor(char *buff)
+int		ft_coor(char *buff, t_mapinfo *pinfo)
 {
 	char		**map;
-	t_mapinfo	*pinfo;
+	char		**tmp;
 	int			ret;
 
 	map = NULL;
-	pinfo = NULL;
+	tmp = NULL;
+
 	if ((map = ft_cpymap(buff, map)) == NULL)
 		return (0);
 	ret = ft_mapprocess(map, pinfo);
 	if (ret >= 0)
+	{
 		map = ft_cleanmap(map);
-	ret = ft_checkmap2(map);
-	
+		ret = ft_checkmap2(map);
+		tmp = ft_fillmask(map);
+		map = ft_deposemask(map, tmp);
+		ft_checkfill(map);
+	}
 	ft_afftab(map);
-	map = ft_freetab(map);
-	//pinfo = ft_freestruct(pinfo);
+	ft_freetab(map);
+	//ft_freestruct(pinfo);
 	//printf("%d\n", ret);
 	return (ret);
 }
 
 int		main(int ac, char **av)
 {
+	t_mapinfo info;
+
+	ft_bzero(&info, sizeof(info));
+	ft_initinfo(&info);
 	if (ac != 2)
 	{
 		ft_putstr("Wrong arg nbrs for ./cub\n");
 		return (-1);
 	}
-	return (ft_coor(av[1]));
+	else
+	{
+		ft_coor(av[1], &info);
+	}
+	return (0);
 }

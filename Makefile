@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epetrill <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/15 20:38:23 by epetrill          #+#    #+#              #
-#    Updated: 2020/03/01 06:16:59 by epetrill         ###   ########lyon.fr    #
+#    Updated: 2020/10/30 03:07:47 by epetrill         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= cub
+NAME	= Cub3D
 CC		= /usr/bin/gcc
 SRCDIR	= srcs
 INCDIR	= includes
