@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:59:51 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/30 03:23:11 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/10/30 16:18:07 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void			ft_initinfo(t_mapinfo *pinfo) // Init struct
 {
-	//pinfo->res[0] = -1;
-	//pinfo->res[1] = -1;
+	pinfo->res_x = -1;
+	pinfo->res_y = -1;
 	pinfo->north = NULL;
 	pinfo->south = NULL;
 	pinfo->east = NULL;
 	pinfo->west = NULL;
 	pinfo->sprite = NULL;
-	//pinfo->floor[0] = -1;
-	//pinfo->floor[1] = -1;
-	//pinfo->floor[2] = -1;
-	//pinfo->ceil[0] = -1;
-	//pinfo->ceil[1] = -1;
-	//pinfo->ceil[2] = -1;
+	pinfo->floor_r = -1;
+	pinfo->floor_g = -1;
+	pinfo->floor_b = -1;
+	pinfo->ceil_r = -1;
+	pinfo->ceil_g = -1;
+	pinfo->ceil_b = -1;
 }
 
 int			ft_fillpath(char *line, t_mapinfo *pinfo, int chx)
@@ -57,7 +57,7 @@ int			ft_mapprocess(char **map, t_mapinfo *pinfo)
 	i = 0;
 	ret = 1;
 
-	while (map[i] && ret > 0 && ft_checkinf(*pinfo))
+	while (map[i] && ret > 0 && ft_checkinf(pinfo))
 	{
 		if (ft_isparam(map[i]) == 0 && *map[i] != 0)
 		{

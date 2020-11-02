@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:48:54 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/30 03:19:11 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/10/30 16:55:29 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**ft_cleanmap(char **map)
 	j = i;
 	while (*map[j])
 		j++;
-	map = ft_avoidpar(map, i, j - i);
+	map = ft_avoidpar(map, i, j - i + 1);
 	return (map);
 }
 
@@ -40,19 +40,16 @@ char	**ft_avoidpar(char **map, int i, int size)
 	int		j;
 	char	**map2;
 
-	j = 0;
-	if (!(map2 = malloc((size + 1) * sizeof(*map2))))
+	j = i;
+	if (!(map2 = malloc((size + 1) * sizeof(void *))))
 		return (ft_error("Issue during malloc map lines"));
+	while(j-- > 0)
+		free(map[j]);
+	j = 0;
 	while (map[i])
-	{
-		//printf("OUI\n");
-		ft_strcpy(map2[j], map[i]);
-		//printf("NON\n");
-		i++;
-		j++;
-	}
+		map2[j++] = map[i++];
 	map2[j] = NULL;
-	ft_freetab(map);
+	free(map);
 	return (map2);
 }
 
@@ -78,7 +75,7 @@ int		ft_coor(char *buff, t_mapinfo *pinfo)
 	}
 	ft_afftab(map);
 	ft_freetab(map);
-	//ft_freestruct(pinfo);
+	ft_freestruct(pinfo);
 	//printf("%d\n", ret);
 	return (ret);
 }

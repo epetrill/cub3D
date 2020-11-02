@@ -8,18 +8,23 @@
 
 typedef struct	s_mapinfo
 {
-	int			*res;
+	int			res_x;
+	int			res_y;
 	char		*north;
 	char		*south;
 	char		*east;
 	char		*west;
 	char		*sprite;
-	int			*floor;
-	int			*ceil;
+	int			floor_r;
+	int			floor_g;
+	int			floor_b;
+	int			ceil_r;
+	int			ceil_g;
+	int			ceil_b;
 }				t_mapinfo;
 
 char			**ft_error(char *str);
-int				ft_checkinf(t_mapinfo info);
+int				ft_checkinf(t_mapinfo *pinfo);
 int				ft_isparam(char *str);
 int				ft_strncmp(const char *s1, const char *s2, int n);
 char			*ft_strdup(const char *s1);

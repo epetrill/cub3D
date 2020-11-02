@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 07:05:03 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/30 03:19:59 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/10/30 16:17:50 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void		ft_putstr(char *str)
 
 void	ft_freestruct(t_mapinfo *pinfo)
 {
-	if(pinfo->res)
-		free(pinfo->res);
 	if(pinfo->north)
 		free(pinfo->north);
 	if(pinfo->south)
@@ -53,13 +51,7 @@ void	ft_freestruct(t_mapinfo *pinfo)
 		free(pinfo->east);
 	if(pinfo->west)
 		free(pinfo->west);
-	if(pinfo->floor)
+	if(pinfo->sprite)
 		free(pinfo->sprite);
-	if(pinfo->floor)
-		free(pinfo->floor);
-	if(pinfo->ceil)
-		free(pinfo->ceil);
-	if(pinfo)
-		free(pinfo);
 	pinfo = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:52:36 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/30 01:25:57 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/11/02 16:08:57 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ char		**ft_error(char *str) // Error chaine de carac
 	return (NULL);
 }
 
-int			ft_checkinf(t_mapinfo info)
+int			ft_checkinf(t_mapinfo *pinfo)
 {
-	if (info.res[0] < 0 || info.res[1] < 0 || info.north == NULL
-		|| info.south == NULL || info.floor[1] < 0 || info.floor[0] < 0
-		|| info.south == NULL || info.east == NULL || info.west == NULL
-		|| info.sprite == NULL || info.floor[2] < 0 || info.ceil[2] < 0
-		|| info.ceil[1] < 0 || info.ceil[0] < 0)
+	if (pinfo->res_x < 0 || pinfo->res_y < 0 || pinfo->north == NULL
+		|| pinfo->south == NULL || pinfo->floor_g < 0 || pinfo->floor_r < 0
+		|| pinfo->south == NULL || pinfo->east == NULL || pinfo->west == NULL
+		|| pinfo->sprite == NULL || pinfo->floor_b < 0 || pinfo->ceil_b < 0
+		|| pinfo->ceil_g < 0 || pinfo->ceil_r < 0)
 		return (-1);
-	else if (info.floor[0] > 255 || info.floor[1] > 255 || info.floor[2] > 255
-		|| info.ceil[0] > 255 || info.ceil[1] > 255 || info.ceil[2] > 255)
+	else if (pinfo->floor_r > 255 || pinfo->floor_g > 255 || pinfo->floor_b > 255
+		|| pinfo->ceil_r > 255 || pinfo->ceil_g > 255 || pinfo->ceil_b > 255)
 		return (-1);
 	return (0);
 }
@@ -44,12 +44,13 @@ int			ft_checkmap(char **map)
 	start = 0;
 	while (map[i])
 	{
-		while (map[i][j])
+		j = 0;
+		while (map[i][j] != '\n' && map[i][j])
 		{
-			if (map[i][j] != 'N' && map[i][j] != 'S'
-				&& map[i][j] != 'W' && map[i][j] != 'E')
+			if (start == 0 && (map[i][j] == 'N' || map[i][j] == 'S'
+				|| map[i][j] == 'W' || map[i][j] == 'E'))
 				start = 1;
-			if (start == 1 && (map[i][j] == 'N' || map[i][j] == 'S'
+			else if (start == 1 && (map[i][j] == 'N' || map[i][j] == 'S'
 				|| map[i][j] == 'W' || map[i][j] == 'E'))
 			{
 				ft_putstr("Plusieurs positions de depart !\n");
@@ -176,7 +177,7 @@ void		ft_checkfill(char **map)
 		j = 0;
 		while (map[i][j] != '\n' && map[i][j])
 		{
-			if (map[i][j] == '0' && (map[i - 1][j] == '5' 
+			if (map[i][j] != '1' && map[i][j] != '5' && (map[i - 1][j] == '5' 
 				|| map[i][j - 1] == '5' || map[i + 1][j] == '5'
 				|| map[i][j + 1] == '5'))
 				ft_putstr("La map est ouverte !\n");
