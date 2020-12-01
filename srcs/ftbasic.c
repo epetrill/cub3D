@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 07:08:17 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/29 07:12:41 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/01 21:12:05 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			ft_strncmp(const char *s1, const char *s2, int n)
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
-int			ft_isparam(char *str) // Savoir si ligne d'info ou ligne map
+int			ft_isparam(char *str)
 {
 	int i;
 

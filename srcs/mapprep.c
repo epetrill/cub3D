@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:58:21 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/30 16:06:58 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/01 21:13:07 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int			ft_reachc(char *line, t_mapinfo *pinfo)
 }
 
 int			ft_reachres(char *line, t_mapinfo *pinfo)
-{	if (pinfo->res_x == -1 && pinfo->res_y == -1)
+{
+	if (pinfo->res_x == -1 && pinfo->res_y == -1)
 	{
 		line++;
 		while (*line == ' ')
@@ -80,7 +81,6 @@ int			ft_reachf(char *line, t_mapinfo *pinfo)
 		ft_putstr("Couleur du sol en double !\n");
 		return (-2);
 	}
-	
 }
 
 int			ft_reachwall(char *line, t_mapinfo *pinfo, int chx)

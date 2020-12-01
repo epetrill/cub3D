@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:48:54 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/30 16:55:29 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/01 21:21:14 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**ft_avoidpar(char **map, int i, int size)
 	j = i;
 	if (!(map2 = malloc((size + 1) * sizeof(void *))))
 		return (ft_error("Issue during malloc map lines"));
-	while(j-- > 0)
+	while (j-- > 0)
 		free(map[j]);
 	j = 0;
 	while (map[i])
@@ -61,7 +61,6 @@ int		ft_coor(char *buff, t_mapinfo *pinfo)
 
 	map = NULL;
 	tmp = NULL;
-
 	if ((map = ft_cpymap(buff, map)) == NULL)
 		return (0);
 	ret = ft_mapprocess(map, pinfo);
@@ -69,21 +68,25 @@ int		ft_coor(char *buff, t_mapinfo *pinfo)
 	{
 		map = ft_cleanmap(map);
 		ret = ft_checkmap2(map);
-		tmp = ft_fillmask(map);
+	}
+	if (ret >= 0)
+	{
+		tmp = ft_fillmask(map, pinfo);
 		map = ft_deposemask(map, tmp);
-		ft_checkfill(map);
+		ret = ret || ft_checkfill(map, pinfo);
 	}
 	ft_afftab(map);
 	ft_freetab(map);
 	ft_freestruct(pinfo);
-	//printf("%d\n", ret);
 	return (ret);
 }
 
 int		main(int ac, char **av)
 {
-	t_mapinfo info;
+	t_mapinfo	info;
+	int			ret;
 
+	ret = 0;
 	ft_bzero(&info, sizeof(info));
 	ft_initinfo(&info);
 	if (ac != 2)
@@ -93,7 +96,9 @@ int		main(int ac, char **av)
 	}
 	else
 	{
-		ft_coor(av[1], &info);
+		ret = ft_coor(av[1], &info);
+		if (ret < 0)
+			return (-1);
 	}
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 07:01:32 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/30 16:34:04 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/01 21:13:51 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-void	ft_freetab(char **map)// Liberez le tableau en fin de processus
+void	ft_freetab(char **map)
 {
 	int i;
 
@@ -27,7 +27,7 @@ void	ft_freetab(char **map)// Liberez le tableau en fin de processus
 	map = NULL;
 }
 
-char	**ft_cpymap(char *fichier, char **map)//Fichier texte -> tableau
+char	**ft_cpymap(char *fichier, char **map)
 {
 	int gnl_ret;
 	int fd;
@@ -74,7 +74,7 @@ char	**ft_realloc(char **map, int size)
 	return (tmp);
 }
 
-void	ft_afftab(char **map) // Afficher un tableau 2 dim
+void	ft_afftab(char **map)
 {
 	int i;
 
@@ -82,9 +82,6 @@ void	ft_afftab(char **map) // Afficher un tableau 2 dim
 	while (map[i])
 	{
 		printf("|%s|\n", map[i]);
-		//free(map[i]);
 		i++;
 	}
-	//free(map[i]);
-	//free(map);
 }

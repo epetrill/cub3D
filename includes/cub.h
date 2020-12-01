@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/01 21:52:32 by epetrill          #+#    #+#             */
+/*   Updated: 2020/12/01 21:57:57 by epetrill         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB_H
 # define CUB_H
 
@@ -21,6 +33,8 @@ typedef struct	s_mapinfo
 	int			ceil_r;
 	int			ceil_g;
 	int			ceil_b;
+	int			col;
+	int			lign;
 }				t_mapinfo;
 
 char			**ft_error(char *str);
@@ -50,11 +64,11 @@ char			**ft_cleanmap(char **map);
 char			**ft_avoidpar(char **map, int i, int size);
 int				ft_coor(char *buff, t_mapinfo *pinfo);
 int				ft_checkmap2(char **map);
-int				ft_checkmap(char **map);
-int				*ft_colmax(char	**map);
-char			**ft_fillmask(char **map);
+int				ft_checkmap(char **map, int start);
+int				*ft_colmax(char	**map, t_mapinfo *pinfo);
+char			**ft_fillmask(char **map, t_mapinfo *pinfo);
 char			**ft_deposemask(char **map, char **mask);
-void			ft_checkfill(char **map);
+int				ft_checkfill(char **map, t_mapinfo *pinfo);
 void			ft_bzero(void *s, size_t n);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/15 20:38:23 by epetrill          #+#    #+#              #
-#    Updated: 2020/10/30 03:07:47 by epetrill         ###   ########lyon.fr    #
+#    Updated: 2020/12/01 21:38:46 by epetrill         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCDIR	= includes
 OBJDIR	= objs
 CFLAGS	= -Wall -Wextra -Werror
 IFLAGS	= -I$(INCDIR)
-SRCS	= $(addprefix $(SRCDIR)/, ftbasic3.c ftbasic2.c mapprep.c param.c cub.c filetotab.c ftbasic.c error.c get_next_line.c get_next_line_utils.c)
+SRCS	= $(addprefix $(SRCDIR)/, ftbasic3.c ftbasic2.c mapprep.c param.c cub.c filetotab.c ftbasic.c error.c get_next_line.c get_next_line_utils.c error2.c)
 OBJS	= $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 HDRS	= $(addprefix $(INCDIR)/, cub.h get_next_line.h)
 

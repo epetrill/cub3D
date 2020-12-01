@@ -6,13 +6,13 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:59:51 by epetrill          #+#    #+#             */
-/*   Updated: 2020/10/30 16:18:07 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/01 21:16:52 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-void			ft_initinfo(t_mapinfo *pinfo) // Init struct
+void		ft_initinfo(t_mapinfo *pinfo)
 {
 	pinfo->res_x = -1;
 	pinfo->res_y = -1;
@@ -27,6 +27,8 @@ void			ft_initinfo(t_mapinfo *pinfo) // Init struct
 	pinfo->ceil_r = -1;
 	pinfo->ceil_g = -1;
 	pinfo->ceil_b = -1;
+	pinfo->lign = 0;
+	pinfo->col = 0;
 }
 
 int			ft_fillpath(char *line, t_mapinfo *pinfo, int chx)
@@ -56,7 +58,6 @@ int			ft_mapprocess(char **map, t_mapinfo *pinfo)
 
 	i = 0;
 	ret = 1;
-
 	while (map[i] && ret > 0 && ft_checkinf(pinfo))
 	{
 		if (ft_isparam(map[i]) == 0 && *map[i] != 0)
