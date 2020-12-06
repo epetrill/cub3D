@@ -5,41 +5,55 @@
 #                                                     +:+ +:+         +:+      #
 #    By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/15 20:38:23 by epetrill          #+#    #+#              #
-#    Updated: 2020/12/01 21:38:46 by epetrill         ###   ########lyon.fr    #
+#    Created: 2020/02/15 17:48:42 by epetrill          #+#    #+#              #
+#    Updated: 2020/12/06 02:48:19 by epetrill         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= Cub3D
-CC		= /usr/bin/gcc
-SRCDIR	= srcs
-INCDIR	= includes
-OBJDIR	= objs
-CFLAGS	= -Wall -Wextra -Werror
-IFLAGS	= -I$(INCDIR)
-SRCS	= $(addprefix $(SRCDIR)/, ftbasic3.c ftbasic2.c mapprep.c param.c cub.c filetotab.c ftbasic.c error.c get_next_line.c get_next_line_utils.c error2.c)
-OBJS	= $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
-HDRS	= $(addprefix $(INCDIR)/, cub.h get_next_line.h)
+NAME = Cub3D
+CC = clang
 
-all				:	$(NAME)
+# FLAGS = -g3 -fsanitize=address -Wall -Wextra -Werror -I include/
+FLAGS = -g3 -Wall -Wextra -Werror -I include/
 
+MLXFLAGS = -lm -lXext -lX11
 
-$(NAME)			:	$(OBJDIR) $(OBJS)
-		$(CC) -g -o $@ $(OBJS)
+INC = include/cub.h
+HEADER = include
+FILES = srcs/cub.c \
+		srcs/error.c \
+		srcs/error2.c \
+		srcs/filetotab.c \
+		srcs/ftbasic.c \
+		srcs/ftbasic2.c \
+		srcs/ftbasic3.c \
+		srcs/get_next_line_utils.c \
+		srcs/get_next_line.c \
+		srcs/mapprep.c \
+		srcs/mlxbasics.c \
+		srcs/param.c
+		
+MLX = minilibx-linux/libmlx.a
+MLX2 = minilibx-linux/libmlx_Linux.a
 
-$(OBJDIR)		:
-		mkdir -p $@
+OBJ = $(FILES:.c=.o)
 
-$(OBJDIR)/%.o	:	$(SRCDIR)/%.c $(HDRS)
-		$(CC) $(CFLAGS) $(IFLAGS) -g -c -o $@ $<
+all: draw $(NAME)
 
-clean			:
-		/bin/rm -rf $(OBJDIR)
+$(NAME): $(OBJ)
+	$(CC) $(FLAGS) $(MLXFLAGS) $(FILES) $(MLX) $(MLX2) -o $(NAME)
 
-fclean			:	clean
-		/bin/rm -f $(NAME)
+bonus: all
 
-re				:	fclean all
+clean:
+	@rm -rf $(OBJ)
+	@make clean -C minilibx-linux
 
+fclean: clean
+	@rm -f $(NAME)
+	@make clean
+	
+re: fclean all
 
-.PHONY			: cub
+draw:
+	@make -C minilibx-linux

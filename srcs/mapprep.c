@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:58:21 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/01 21:13:07 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/06 03:01:29 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			ft_reachres(char *line, t_mapinfo *pinfo)
 		line++;
 		while (*line == ' ')
 			line++;
-		pinfo->res_x = ft_atoimod(line, 0);
+		pinfo->res_x = ft_atoimod(line, 0); 
 		line = line + ft_nblen(line);
 		while (*line == ' ')
 			line++;

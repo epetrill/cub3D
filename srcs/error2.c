@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 21:34:49 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/01 21:37:28 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/02 20:25:42 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,8 @@ char		**ft_deposemask(char **map, char **mask)
 	return (mask);
 }
 
-int			ft_checkfill(char **map, t_mapinfo *pinfo)
+int			ft_checkfill(char **map, t_mapinfo *pinfo, int i, int j)
 {
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
 	while (map[i])
 	{
 		j = 0;

@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 21:52:32 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/01 21:57:57 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/06 03:37:45 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,38 @@
 # include "fcntl.h"
 # include "stdio.h"
 # include "stdlib.h"
+# include "../minilibx-linux/mlx.h"
+# include "key_linux.h"
+# define TEX_X 64
+# define TEX_Y 64
+
+typedef struct	s_mlx
+{
+	void		*ptr;
+	void		*win;
+	int			img_width;
+	int			img_height;
+}				t_mlx;
+
+
+
+/*
+**	Structure joueur
+*/
+
+typedef struct 	s_player
+{
+	double 		pos_x;
+	double 		pos_y;
+	double 		dir_x;
+	double 		dir_y;
+	double 		plane_x;
+	double 		plane_y;
+}				t_player;
+
+/*
+**	Structure map + info	
+*/
 
 typedef struct	s_mapinfo
 {
@@ -35,7 +67,16 @@ typedef struct	s_mapinfo
 	int			ceil_b;
 	int			col;
 	int			lign;
+	int 		start_x;
+	int 		start_y;
+	int			**texture;
+	t_mlx		data;
+	t_player	player;
 }				t_mapinfo;
+
+/*
+**	Fonctions process map check map
+*/
 
 char			**ft_error(char *str);
 int				ft_checkinf(t_mapinfo *pinfo);
@@ -63,12 +104,20 @@ void			ft_freestruct(t_mapinfo *pinfo);
 char			**ft_cleanmap(char **map);
 char			**ft_avoidpar(char **map, int i, int size);
 int				ft_coor(char *buff, t_mapinfo *pinfo);
-int				ft_checkmap2(char **map);
-int				ft_checkmap(char **map, int start);
+int				ft_checkmap2(char **map, t_mapinfo *pinfo);
+int				ft_checkmap(char **map, int start, int j, t_mapinfo *pinfo);
 int				*ft_colmax(char	**map, t_mapinfo *pinfo);
 char			**ft_fillmask(char **map, t_mapinfo *pinfo);
 char			**ft_deposemask(char **map, char **mask);
-int				ft_checkfill(char **map, t_mapinfo *pinfo);
+int				ft_checkfill(char **map, t_mapinfo *pinfo, int i, int j);
 void			ft_bzero(void *s, size_t n);
+
+/*
+**	Fonctions minilibx
+*/
+
+int        		mlx_shit(t_mapinfo *pinfo);
+int				mlx_open(t_mapinfo *pinfo);
+void			resize_res(t_mapinfo *pinfo);
 
 #endif

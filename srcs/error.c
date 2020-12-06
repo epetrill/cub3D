@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:52:36 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/01 21:33:06 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/02 20:31:24 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ int			ft_checkinf(t_mapinfo *pinfo)
 	return (0);
 }
 
-int			ft_checkmap(char **map, int start)
+int			ft_checkmap(char **map, int start, int i, t_mapinfo *pinfo)
 {
-	int i;
 	int j;
 
-	i = 0;
-	j = 0;
 	while (map[i])
 	{
 		j = 0;
@@ -48,7 +45,11 @@ int			ft_checkmap(char **map, int start)
 		{
 			if (start == 0 && (map[i][j] == 'N' || map[i][j] == 'S'
 				|| map[i][j] == 'W' || map[i][j] == 'E'))
+			{
 				start = 1;
+				pinfo->start_x = i;
+				pinfo->start_y = j;
+			}
 			else if (start == 1 && (map[i][j] == 'N' || map[i][j] == 'S'
 				|| map[i][j] == 'W' || map[i][j] == 'E'))
 			{
@@ -62,7 +63,7 @@ int			ft_checkmap(char **map, int start)
 	return (0);
 }
 
-int			ft_checkmap2(char **map)
+int			ft_checkmap2(char **map, t_mapinfo *pinfo)
 {
 	int i;
 	int j;
@@ -85,7 +86,7 @@ int			ft_checkmap2(char **map)
 		}
 		i++;
 	}
-	return (ft_checkmap(map, 0));
+	return (ft_checkmap(map, 0, 0, pinfo));
 }
 
 int			*ft_colmax(char **map, t_mapinfo *pinfo)
