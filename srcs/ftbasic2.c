@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 07:05:03 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/01 21:20:45 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 10:30:08 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ void	ft_freestruct(t_mapinfo *pinfo)
 		free(pinfo->west);
 	if (pinfo->sprite)
 		free(pinfo->sprite);
+	if (pinfo->map)
+		ft_freetab(pinfo->map);
 	pinfo = NULL;
 }

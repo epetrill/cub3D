@@ -6,7 +6,7 @@
 #    By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/15 17:48:42 by epetrill          #+#    #+#              #
-#    Updated: 2020/12/07 03:26:53 by epetrill         ###   ########lyon.fr    #
+#    Updated: 2020/12/07 09:59:09 by epetrill         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,12 @@ FILES = srcs/cub.c \
 		srcs/img_init.c \
 		srcs/setter.c \
 		srcs/show.c \
-		srcs/move.c
+		srcs/move.c \
+		srcs/ray_designer.c \
+		srcs/calculation.c \
+		srcs/spriter.c \
+		srcs/spriter2.c
+
 		
 MLX = minilibx-linux/libmlx.a
 MLX2 = minilibx-linux/libmlx_Linux.a

@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 21:52:32 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 03:45:10 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 10:22:51 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,8 @@ typedef struct	s_mapinfo
 	double		*spribuf;
 	int			counter_sprite;
 	int			numsprite;
+	int			hexfloor;
+	int 		hexceil;
 	t_mlx		data;
 	t_player	player;
 	t_spray		s_ray;
@@ -224,7 +226,7 @@ int				ft_checkmap2(t_mapinfo *pinfo);
 int				ft_checkmap(int start, int j, t_mapinfo *pinfo);
 int				*ft_colmax(t_mapinfo *pinfo);
 char			**ft_fillmask(t_mapinfo *pinfo);
-char			**ft_deposemask(char **map, char **mask);
+char			**ft_deposemask(char **mask, t_mapinfo *pinfo);
 int				ft_checkfill(t_mapinfo *pinfo, int i, int j);
 void			ft_bzero(void *s, size_t n);
 int				ft_isthing(char c);
@@ -257,5 +259,23 @@ int				key_press(int code, t_mapinfo *pinfo, int choice);
 void			watching_left(t_mapinfo *pinfo);
 void			watching_right(t_mapinfo *pinfo);
 int     		close_game(t_mapinfo *pinfo);
+void        	draw_floor_ceiling(t_mapinfo *pinfo);
+void        	designer(t_mapinfo *pinfo);
+void			ft_rgbtohex(t_mapinfo *pinfo);
+int				main_loop(t_mapinfo *pinfo);
+void			launcher(t_mapinfo *pinfo);
+void			tex_calculation(t_mapinfo *pinfo);
+void			wall_height_calculation(t_mapinfo *pinfo);
+void			wall_distance_calculation(t_mapinfo *pinfo);
+void			hit_analyzing(t_mapinfo *pinfo);
+void			step_calculation(t_mapinfo *pinfo);
+void			texturing_buf(t_mapinfo *pinfo, int x);
+void			get_sprite_color(t_mapinfo *pinfo, int stripe);
+void			calculate_sprite_width(t_mapinfo *pinfo);
+void			calculate_sprite_height(t_mapinfo *pinfo);
+void			translating_sprite(t_mapinfo *pinfo, int i);
+void			spriter(t_mapinfo *pinfo);
+void			sprite_mapper(t_mapinfo *pinfo);
+void			sprite_sorter(t_mapinfo *pinfo);
 
 #endif

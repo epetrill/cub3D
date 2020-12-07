@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:48:54 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 01:52:50 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 10:28:05 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,9 @@ int		ft_coor(char *buff, t_mapinfo *pinfo)
 	if (ret >= 0)
 	{
 		tmp = ft_fillmask(pinfo);
-		pinfo->map = ft_deposemask(pinfo->map, tmp);
+		pinfo->map = ft_deposemask(tmp, pinfo);
 		ret = ret || ft_checkfill(pinfo, 0, 0);
 	}
-	ft_afftab(pinfo->map);
-	ft_freetab(pinfo->map);
-	ft_freestruct(pinfo);
 	return (ret);
 }
 
@@ -97,7 +94,9 @@ int		main(int ac, char **av)
 		ret = ft_coor(av[1], &info);
 		if (ret < 0)
 			return (-1);
+		ft_rgbtohex(&info);
 		mlx_shit(&info);
 	}
+	ft_freestruct(&info);
 	return (0);
 }

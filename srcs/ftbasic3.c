@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 07:12:09 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 02:56:53 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 09:37:57 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,14 @@ void	ft_startpos(t_mapinfo *pinfo, char c, int i, int j)
 		pinfo->cardinal = 4;
 	else if (c == 'S')
 		pinfo->cardinal = 3;
+}
+
+void	ft_rgbtohex(t_mapinfo *pinfo)
+{
+	pinfo->hexfloor = ((pinfo->floor_r & 0x0ff) << 16)
+	| ((pinfo->floor_g & 0x0ff) << 8)
+	| ((pinfo->floor_b & 0x0ff));
+	pinfo->hexceil = ((pinfo->ceil_r & 0x0ff) << 16)
+	| ((pinfo->ceil_g & 0x0ff) << 8)
+	| ((pinfo->ceil_b & 0x0ff));
 }

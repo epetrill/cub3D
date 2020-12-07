@@ -6,21 +6,21 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 21:40:36 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 03:43:20 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 10:14:10 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/cub.h"
 
-int       mlx_open(t_mapinfo *pinfo)
+int			main_loop(t_mapinfo *pinfo)
 {
-    if ((pinfo->data.win = mlx_new_window(pinfo->data.ptr, pinfo->res_x, pinfo->res_y, "Cub3D")) == NULL)
-        return (EXIT_FAILURE);
-    mlx_loop(pinfo->data.ptr);
-    return (EXIT_SUCCESS);
+	launcher(pinfo);
+	spriter(pinfo);
+	designer(pinfo);
+	return (0);
 }
 
-void       resize_res(t_mapinfo *pinfo)
+void		resize_res(t_mapinfo *pinfo)
 {
     int resX;
     int resY;
@@ -32,25 +32,24 @@ void       resize_res(t_mapinfo *pinfo)
         pinfo->res_y = resY;
 }
 
-int       cross_close(t_mapinfo *pinfo)
+int			cross_close(t_mapinfo *pinfo)
 {
     ft_putstr("Vous avez quitte avec la croix !\n");
     return (key_press(KEY_ESC, pinfo, 118));
 }
 
-int        mlx_shit(t_mapinfo *pinfo)
+int			mlx_shit(t_mapinfo *pinfo)
 {
     if ((pinfo->data.ptr = mlx_init()) == NULL)
         return (EXIT_FAILURE);
     resize_res(pinfo);
-    mlx_open(pinfo);
     buffer_init(pinfo);
     texture_init(pinfo);
     sprite_init(pinfo);
     tex_loader(pinfo);
     angle_setter(pinfo);
     if ((pinfo->data.win = mlx_new_window(pinfo->data.ptr, pinfo->res_x, pinfo->res_y
-    , "Cub3D")) == NULL)
+    , "fast")) == NULL)
         return(-1);
     if ((pinfo->data.img = mlx_new_image(pinfo->data.ptr, pinfo->res_x, pinfo->res_y))
     == NULL)
