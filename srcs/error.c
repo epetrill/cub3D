@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:52:36 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/02 20:31:24 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 02:44:27 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,23 @@ int			ft_checkinf(t_mapinfo *pinfo)
 	return (0);
 }
 
-int			ft_checkmap(char **map, int start, int i, t_mapinfo *pinfo)
+int			ft_checkmap(int start, int i, t_mapinfo *pinfo)
 {
 	int j;
 
-	while (map[i])
+	while (pinfo->map[i])
 	{
 		j = 0;
-		while (map[i][j] != '\n' && map[i][j])
+		while (pinfo->map[i][j] != '\n' && pinfo->map[i][j])
 		{
-			if (start == 0 && (map[i][j] == 'N' || map[i][j] == 'S'
-				|| map[i][j] == 'W' || map[i][j] == 'E'))
+			if (start == 0 && (pinfo->map[i][j] == 'N' || pinfo->map[i][j] == 'S'
+				|| pinfo->map[i][j] == 'W' || pinfo->map[i][j] == 'E'))
 			{
 				start = 1;
-				pinfo->start_x = i;
-				pinfo->start_y = j;
+				ft_startpos(pinfo, pinfo->map[i][j], i, j);
 			}
-			else if (start == 1 && (map[i][j] == 'N' || map[i][j] == 'S'
-				|| map[i][j] == 'W' || map[i][j] == 'E'))
+			else if (start == 1 && (pinfo->map[i][j] == 'N' || pinfo->map[i][j] == 'S'
+				|| pinfo->map[i][j] == 'W' || pinfo->map[i][j] == 'E'))
 			{
 				ft_putstr("Plusieurs positions de depart !\n");
 				return (-1);
@@ -63,21 +62,21 @@ int			ft_checkmap(char **map, int start, int i, t_mapinfo *pinfo)
 	return (0);
 }
 
-int			ft_checkmap2(char **map, t_mapinfo *pinfo)
+int			ft_checkmap2(t_mapinfo *pinfo)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	while (map[i])
+	while (pinfo->map[i])
 	{
 		j = 0;
-		while (map[i][j] != '\n' && map[i][j])
+		while (pinfo->map[i][j] != '\n' && pinfo->map[i][j])
 		{
-			if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'N'
-				&& map[i][j] != 'S' && map[i][j] != 'W' && map[i][j] != 'E'
-				&& map[i][j] != ' ' && map[i][j] != '\n' && map[i][j] != '2')
+			if (pinfo->map[i][j] != '1' && pinfo->map[i][j] != '0' && pinfo->map[i][j] != 'N'
+				&& pinfo->map[i][j] != 'S' && pinfo->map[i][j] != 'W' && pinfo->map[i][j] != 'E'
+				&& pinfo->map[i][j] != ' ' && pinfo->map[i][j] != '\n' && pinfo->map[i][j] != '2')
 			{
 				ft_putstr("Caractere impossible dans la map !\n");
 				return (-1);
@@ -86,18 +85,18 @@ int			ft_checkmap2(char **map, t_mapinfo *pinfo)
 		}
 		i++;
 	}
-	return (ft_checkmap(map, 0, 0, pinfo));
+	return (ft_checkmap(0, 0, pinfo));
 }
 
-int			*ft_colmax(char **map, t_mapinfo *pinfo)
+int			*ft_colmax(t_mapinfo *pinfo)
 {
 	int i;
 
 	i = 0;
-	while (map[pinfo->lign])
+	while (pinfo->map[pinfo->lign])
 	{
 		i = 0;
-		while (map[pinfo->lign][i] != '\n' && map[pinfo->lign][i])
+		while (pinfo->map[pinfo->lign][i] != '\n' && pinfo->map[pinfo->lign][i])
 			i++;
 		if (i > pinfo->col)
 			pinfo->col = i;

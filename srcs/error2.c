@@ -6,19 +6,19 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 21:34:49 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/02 20:25:42 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 01:58:48 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-char		**ft_fillmask(char **map, t_mapinfo *pinfo)
+char		**ft_fillmask(t_mapinfo *pinfo)
 {
 	char	**tmp;
 	int		i;
 	int		j;
 
-	ft_colmax(map, pinfo);
+	ft_colmax(pinfo);
 	if (!(tmp = malloc((pinfo->lign + 1) * sizeof(*tmp))))
 		return (ft_error("Issue during realloc map\n"));
 	i = 0;
@@ -61,23 +61,23 @@ char		**ft_deposemask(char **map, char **mask)
 	return (mask);
 }
 
-int			ft_checkfill(char **map, t_mapinfo *pinfo, int i, int j)
+int			ft_checkfill(t_mapinfo *pinfo, int i, int j)
 {
-	while (map[i])
+	while (pinfo->map[i])
 	{
 		j = 0;
-		while (map[i][j] != '\n' && map[i][j])
+		while (pinfo->map[i][j] != '\n' && pinfo->map[i][j])
 		{
-			if (map[i][j] != '1' && map[i][j] != '5'
+			if (pinfo->map[i][j] != '1' && pinfo->map[i][j] != '5'
 				&& (i == 0 || j == 0 || i == pinfo->lign
 				|| j == pinfo->col))
 			{
 				ft_putstr("La map est ouverte\n");
 				return (-1);
 			}
-			else if (map[i][j] != '1' && map[i][j] != '5'
-				&& (map[i - 1][j] == '5' || map[i][j - 1] == '5'
-				|| map[i + 1][j] == '5' || map[i][j + 1] == '5'))
+			else if (pinfo->map[i][j] != '1' && pinfo->map[i][j] != '5'
+				&& (pinfo->map[i - 1][j] == '5' || pinfo->map[i][j - 1] == '5'
+				|| pinfo->map[i + 1][j] == '5' || pinfo->map[i][j + 1] == '5'))
 			{
 				ft_putstr("La map est ouverte !\n");
 				return (-1);

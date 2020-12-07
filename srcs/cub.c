@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:48:54 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/06 03:43:45 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 01:52:50 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,26 @@ char	**ft_avoidpar(char **map, int i, int size)
 
 int		ft_coor(char *buff, t_mapinfo *pinfo)
 {
-	char		**map;
 	char		**tmp;
 	int			ret;
 
-	map = NULL;
 	tmp = NULL;
-	if ((map = ft_cpymap(buff, map)) == NULL)
+	if ((pinfo->map = ft_cpymap(buff, pinfo->map)) == NULL)
 		return (0);
-	ret = ft_mapprocess(map, pinfo);
+	ret = ft_mapprocess(pinfo);
 	if (ret >= 0)
 	{
-		map = ft_cleanmap(map);
-		ret = ft_checkmap2(map, pinfo);
+		pinfo->map = ft_cleanmap(pinfo->map);
+		ret = ft_checkmap2(pinfo);
 	}
 	if (ret >= 0)
 	{
-		tmp = ft_fillmask(map, pinfo);
-		map = ft_deposemask(map, tmp);
-		ret = ret || ft_checkfill(map, pinfo, 0, 0);
+		tmp = ft_fillmask(pinfo);
+		pinfo->map = ft_deposemask(pinfo->map, tmp);
+		ret = ret || ft_checkfill(pinfo, 0, 0);
 	}
-	ft_afftab(map);
-	ft_freetab(map);
+	ft_afftab(pinfo->map);
+	ft_freetab(pinfo->map);
 	ft_freestruct(pinfo);
 	return (ret);
 }
