@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 07:12:09 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 09:37:57 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 20:43:36 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,28 @@ int		ft_isthing(char c)
 	return (1);
 }
 
-void	ft_startpos(t_mapinfo *pinfo, char c, int i, int j)
+void	ft_startpos(t_mapinfo *map, char c, int i, int j)
 {
-	pinfo->start_x = i;
-	pinfo->start_y = j;
+	map->start_x = i;
+	map->start_y = j;
 	if (c == 'N')
-		pinfo->cardinal = 1;
+		map->cardinal = 1;
 	else if (c == 'W')
-		pinfo->cardinal = 2;
+		map->cardinal = 2;
 	else if (c == 'E')
-		pinfo->cardinal = 4;
+		map->cardinal = 4;
 	else if (c == 'S')
-		pinfo->cardinal = 3;
+		map->cardinal = 3;
+	map->player.pos_x = (float)map->start_x + 0.5;
+	map->player.pos_y = (float)map->start_y + 0.5;
 }
 
-void	ft_rgbtohex(t_mapinfo *pinfo)
+void	ft_rgbtohex(t_mapinfo *map)
 {
-	pinfo->hexfloor = ((pinfo->floor_r & 0x0ff) << 16)
-	| ((pinfo->floor_g & 0x0ff) << 8)
-	| ((pinfo->floor_b & 0x0ff));
-	pinfo->hexceil = ((pinfo->ceil_r & 0x0ff) << 16)
-	| ((pinfo->ceil_g & 0x0ff) << 8)
-	| ((pinfo->ceil_b & 0x0ff));
+	map->hexfloor = ((map->floor_r & 0x0ff) << 16)
+	| ((map->floor_g & 0x0ff) << 8)
+	| ((map->floor_b & 0x0ff));
+	map->hexceil = ((map->ceil_r & 0x0ff) << 16)
+	| ((map->ceil_g & 0x0ff) << 8)
+	| ((map->ceil_b & 0x0ff));
 }

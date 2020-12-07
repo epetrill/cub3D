@@ -6,13 +6,13 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 10:03:58 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 10:05:27 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 20:52:58 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-void	sprite_mapper(t_mapinfo *pinfo)
+void	sprite_mapper(t_mapinfo *map)
 {
 	int			i;
 	int			j;
@@ -21,38 +21,38 @@ void	sprite_mapper(t_mapinfo *pinfo)
 
 	i = 0;
 	max = 0;
-	while (i < pinfo->numsprite - 1)
+	while (i < map->numsprite - 1)
 	{
 		max = i;
 		j = i + 1;
-		while (j < pinfo->numsprite)
+		while (j < map->numsprite)
 		{
-			if (pinfo->sprite[j].dist > pinfo->sprite[i].dist)
+			if (map->sprite[j].dist > map->sprite[i].dist)
 				max = j;
 			j++;
 		}
 		if (i != max)
 		{
-			temp = pinfo->sprite[i];
-			pinfo->sprite[i] = pinfo->sprite[max];
-			pinfo->sprite[max] = temp;
+			temp = map->sprite[i];
+			map->sprite[i] = map->sprite[max];
+			map->sprite[max] = temp;
 		}
 		i++;
 	}
 }
 
-void	sprite_sorter(t_mapinfo *pinfo)
+void	sprite_sorter(t_mapinfo *map)
 {
 	int i;
 
 	i = 0;
-	while (i < pinfo->counter_sprite)
+	while (i < map->counter_sprite)
 	{
-		pinfo->sprite[i].dist = ((pinfo->player.pos_x - pinfo->sprite[i].x) *
-			(pinfo->player.pos_x - pinfo->sprite[i].x) +
-			((pinfo->player.pos_y - pinfo->sprite[i].y) *
-			((pinfo->player.pos_y - pinfo->sprite[i].y))));
+		map->sprite[i].dist = ((map->player.pos_x - map->sprite[i].x) *
+			(map->player.pos_x - map->sprite[i].x) +
+			((map->player.pos_y - map->sprite[i].y) *
+			((map->player.pos_y - map->sprite[i].y))));
 		i++;
 	}
-	sprite_mapper(pinfo);
+	sprite_mapper(map);
 }

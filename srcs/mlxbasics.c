@@ -6,61 +6,61 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 21:40:36 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 10:14:10 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 20:47:50 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/cub.h"
+#include "../includes/cub.h"
 
-int			main_loop(t_mapinfo *pinfo)
+int		main_loop(t_mapinfo *map)
 {
-	launcher(pinfo);
-	spriter(pinfo);
-	designer(pinfo);
+	launcher(map);
+	spriter(map);
+	designer(map);
 	return (0);
 }
 
-void		resize_res(t_mapinfo *pinfo)
+void	resize_res(t_mapinfo *map)
 {
-    int resX;
-    int resY;
+	int	resx;
+	int	resy;
 
-    mlx_get_screen_size(pinfo->data.ptr, &resX, &resY);
-    if(pinfo->res_x > resX)
-        pinfo->res_x = resX;
-    if(pinfo->res_y > resY)
-        pinfo->res_y = resY;
+	mlx_get_screen_size(map->data.ptr, &resx, &resy);
+	if (map->res_x > resx)
+		map->res_x = resx;
+	if (map->res_y > resy)
+		map->res_y = resy;
 }
 
-int			cross_close(t_mapinfo *pinfo)
+int		cross_close(t_mapinfo *map)
 {
-    ft_putstr("Vous avez quitte avec la croix !\n");
-    return (key_press(KEY_ESC, pinfo, 118));
+	ft_putstr("Vous avez quitte avec la croix !\n");
+	return (key_press(KEY_ESC, map, 118));
 }
 
-int			mlx_shit(t_mapinfo *pinfo)
+int		mlx_shit(t_mapinfo *map)
 {
-    if ((pinfo->data.ptr = mlx_init()) == NULL)
-        return (EXIT_FAILURE);
-    resize_res(pinfo);
-    buffer_init(pinfo);
-    texture_init(pinfo);
-    sprite_init(pinfo);
-    tex_loader(pinfo);
-    angle_setter(pinfo);
-    if ((pinfo->data.win = mlx_new_window(pinfo->data.ptr, pinfo->res_x, pinfo->res_y
-    , "fast")) == NULL)
-        return(-1);
-    if ((pinfo->data.img = mlx_new_image(pinfo->data.ptr, pinfo->res_x, pinfo->res_y))
-    == NULL)
-        return(-1);
-    if((pinfo->data.img_data = (int *)mlx_get_data_addr(pinfo->data.img,
-    &pinfo->data.bpp, &pinfo->data.size_l, &pinfo->data.endian)) == NULL)
-        return(-1);
-    mlx_hook(pinfo->data.win, 3, 1, &key_release, pinfo);
-    mlx_hook(pinfo->data.win, 2, 1, &key_press, pinfo);
-    mlx_hook(pinfo->data.win, 33, 0, &cross_close, pinfo);
-    mlx_loop_hook(pinfo->data.ptr, &main_loop, pinfo);
-    mlx_loop(pinfo->data.ptr);
-    return (0);
+	if ((map->data.ptr = mlx_init()) == NULL)
+		return (EXIT_FAILURE);
+	resize_res(map);
+	buffer_init(map);
+	texture_init(map);
+	sprite_init(map);
+	tex_loader(map);
+	angle_setter(map);
+	if ((map->data.win = mlx_new_window(map->data.ptr, map->res_x, map->res_y
+	, "fast")) == NULL)
+		return (-1);
+	if ((map->data.img = mlx_new_image(map->data.ptr, map->res_x, map->res_y))
+	== NULL)
+		return (-1);
+	if ((map->data.img_data = (int *)mlx_get_data_addr(map->data.img,
+	&map->data.bpp, &map->data.size_l, &map->data.endian)) == NULL)
+		return (-1);
+	mlx_hook(map->data.win, 3, 1, &key_release, map);
+	mlx_hook(map->data.win, 2, 1, &key_press, map);
+	mlx_hook(map->data.win, 33, 0, &cross_close, map);
+	mlx_loop_hook(map->data.ptr, &main_loop, map);
+	mlx_loop(map->data.ptr);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 21:52:32 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 10:22:51 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 21:12:52 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct	s_ray
 	double		texpos;
 }				t_ray;
 
-
 /*
 **		Structure calcul sprite
 */
@@ -112,7 +111,7 @@ typedef struct	s_sprite
 {
 	double		x;
 	double		y;
-	double 		dist;
+	double		dist;
 }				t_sprite;
 
 /*
@@ -136,14 +135,14 @@ typedef struct	s_mlx
 **	Structure joueur
 */
 
-typedef struct 	s_player
+typedef struct	s_player
 {
-	double 		pos_x;
-	double 		pos_y;
-	double 		dir_x;
-	double 		dir_y;
-	double 		plane_x;
-	double 		plane_y;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
 	double		old_dir_x;
 	double		old_plane_x;
 	double		movespeed;
@@ -151,7 +150,7 @@ typedef struct 	s_player
 }				t_player;
 
 /*
-**	Structure map + info	
+**	Structure map + info
 */
 
 typedef struct	s_mapinfo
@@ -172,8 +171,8 @@ typedef struct	s_mapinfo
 	int			ceil_b;
 	int			col;
 	int			lign;
-	int 		start_x;
-	int 		start_y;
+	int			start_x;
+	int			start_y;
 	int			cardinal;
 	int			**tex;
 	int			**buffer;
@@ -181,7 +180,7 @@ typedef struct	s_mapinfo
 	int			counter_sprite;
 	int			numsprite;
 	int			hexfloor;
-	int 		hexceil;
+	int			hexceil;
 	t_mlx		data;
 	t_player	player;
 	t_spray		s_ray;
@@ -195,87 +194,87 @@ typedef struct	s_mapinfo
 **	Fonctions process map check map
 */
 
+int				ft_iscardi(char c);
 char			**ft_error(char *str);
 void			*ft_calloc(size_t count, size_t size);
-int				ft_checkinf(t_mapinfo *pinfo);
+int				ft_checkinf(t_mapinfo *map);
 int				ft_isparam(char *str);
 int				ft_strncmp(const char *s1, const char *s2, int n);
 char			*ft_strdup(const char *s1);
 int				ft_atoimod(char *str, int choix);
 int				ft_nblen(char *str);
-void			ft_afftab(char **map);
 char			**ft_realloc(char **map, int size);
 char			**ft_cpymap(char *fichier, char **map);
 void			ft_freetab(char **map);
-int				ft_mapprocess(t_mapinfo *pinfo);
-int				ft_reachinf(char *line, t_mapinfo *pinfo);
-int				ft_reachc(char *line, t_mapinfo *pinfo);
-int				ft_reachf(char *line, t_mapinfo *pinfo);
-int				ft_reachwall(char *line, t_mapinfo *pinfo, int chx);
-int				ft_reachres(char *line, t_mapinfo *pinfo);
-void			ft_initinfo(t_mapinfo *pinfo);
-int				ft_fillpath(char *line, t_mapinfo *pinfo, int chx);
+int				ft_mapprocess(t_mapinfo *map);
+int				ft_reachinf(char *line, t_mapinfo *map);
+int				ft_reachc(char *line, t_mapinfo *map);
+int				ft_reachf(char *line, t_mapinfo *map);
+int				ft_reachwall(char *line, t_mapinfo *map, int chx);
+int				ft_reachres(char *line, t_mapinfo *map);
+void			ft_initinfo(t_mapinfo *map);
+int				ft_fillpath(char *line, t_mapinfo *map, int chx);
 char			*ft_strcpy(char *dest, char *src);
 int				ft_wlen(char *str);
 void			ft_putstr(char *str);
-void			ft_freestruct(t_mapinfo *pinfo);
+void			ft_freestruct(t_mapinfo *map);
 char			**ft_cleanmap(char **map);
 char			**ft_avoidpar(char **map, int i, int size);
-int				ft_coor(char *buff, t_mapinfo *pinfo);
-int				ft_checkmap2(t_mapinfo *pinfo);
-int				ft_checkmap(int start, int j, t_mapinfo *pinfo);
-int				*ft_colmax(t_mapinfo *pinfo);
-char			**ft_fillmask(t_mapinfo *pinfo);
-char			**ft_deposemask(char **mask, t_mapinfo *pinfo);
-int				ft_checkfill(t_mapinfo *pinfo, int i, int j);
+int				ft_coor(char *buff, t_mapinfo *map);
+int				ft_checkmap2(t_mapinfo *map);
+int				ft_checkmap(int start, int j, t_mapinfo *map);
+int				*ft_colmax(t_mapinfo *map);
+char			**ft_fillmask(t_mapinfo *map);
+char			**ft_deposemask(char **mask, t_mapinfo *map);
+int				ft_checkfill(t_mapinfo *map, int i, int j);
 void			ft_bzero(void *s, size_t n);
 int				ft_isthing(char c);
-void			ft_startpos(t_mapinfo *pinfo, char c, int i, int j);
+void			ft_startpos(t_mapinfo *map, char c, int i, int j);
 
 /*
 **	Fonctions minilibx
 */
 
-int        		mlx_shit(t_mapinfo *pinfo);
-int				mlx_open(t_mapinfo *pinfo);
-void			resize_res(t_mapinfo *pinfo);
-int        		buffer_init(t_mapinfo *map);
+int				mlx_shit(t_mapinfo *map);
+int				mlx_open(t_mapinfo *map);
+void			resize_res(t_mapinfo *map);
+int				buffer_init(t_mapinfo *map);
 int				texture_init(t_mapinfo *map);
-void     		sprite_usher(t_mapinfo *map, int i, int x, int y);
-int				sprite_init(t_mapinfo *pinfo);
-void			img_loader(t_mapinfo *pinfo, int *texture, char *path);
-void    		tex_loader(t_mapinfo *map);
-void			angle_setter(t_mapinfo *pinfo);
-void			east_setter(t_mapinfo *pinfo);
-void			north_setter(t_mapinfo *pinfo);
-void			south_setter(t_mapinfo *pinfo);
-void			west_setter(t_mapinfo *pinfo);
-void			moving_up(t_mapinfo *pinfo);
-void			moving_down(t_mapinfo *pinfo);
-void			moving_left(t_mapinfo *pinfo);
-void			moving_right(t_mapinfo *pinfo);
-int				key_release(int code, t_mapinfo *pinfo);
-int				key_press(int code, t_mapinfo *pinfo, int choice);
-void			watching_left(t_mapinfo *pinfo);
-void			watching_right(t_mapinfo *pinfo);
-int     		close_game(t_mapinfo *pinfo);
-void        	draw_floor_ceiling(t_mapinfo *pinfo);
-void        	designer(t_mapinfo *pinfo);
-void			ft_rgbtohex(t_mapinfo *pinfo);
-int				main_loop(t_mapinfo *pinfo);
-void			launcher(t_mapinfo *pinfo);
-void			tex_calculation(t_mapinfo *pinfo);
-void			wall_height_calculation(t_mapinfo *pinfo);
-void			wall_distance_calculation(t_mapinfo *pinfo);
-void			hit_analyzing(t_mapinfo *pinfo);
-void			step_calculation(t_mapinfo *pinfo);
-void			texturing_buf(t_mapinfo *pinfo, int x);
-void			get_sprite_color(t_mapinfo *pinfo, int stripe);
-void			calculate_sprite_width(t_mapinfo *pinfo);
-void			calculate_sprite_height(t_mapinfo *pinfo);
-void			translating_sprite(t_mapinfo *pinfo, int i);
-void			spriter(t_mapinfo *pinfo);
-void			sprite_mapper(t_mapinfo *pinfo);
-void			sprite_sorter(t_mapinfo *pinfo);
+void			sprite_usher(t_mapinfo *map, int i, int x, int y);
+int				sprite_init(t_mapinfo *map);
+void			img_loader(t_mapinfo *map, int *texture, char *path);
+void			tex_loader(t_mapinfo *map);
+void			angle_setter(t_mapinfo *map);
+void			east_setter(t_mapinfo *map);
+void			north_setter(t_mapinfo *map);
+void			south_setter(t_mapinfo *map);
+void			west_setter(t_mapinfo *map);
+void			moving_up(t_mapinfo *map);
+void			moving_down(t_mapinfo *map);
+void			moving_left(t_mapinfo *map);
+void			moving_right(t_mapinfo *map);
+int				key_release(int code, t_mapinfo *map);
+int				key_press(int code, t_mapinfo *map, int choice);
+void			watching_left(t_mapinfo *map);
+void			watching_right(t_mapinfo *map);
+int				close_game(t_mapinfo *map);
+void			draw_floor_ceiling(t_mapinfo *map);
+void			designer(t_mapinfo *map);
+void			ft_rgbtohex(t_mapinfo *map);
+int				main_loop(t_mapinfo *map);
+void			launcher(t_mapinfo *map);
+void			tex_calculation(t_mapinfo *map);
+void			wall_height_calculation(t_mapinfo *map);
+void			wall_distance_calculation(t_mapinfo *map);
+void			hit_analyzing(t_mapinfo *map);
+void			step_calculation(t_mapinfo *map);
+void			texturing_buf(t_mapinfo *map, int x);
+void			get_sprite_color(t_mapinfo *map, int stripe);
+void			calculate_sprite_width(t_mapinfo *map);
+void			calculate_sprite_height(t_mapinfo *map);
+void			translating_sprite(t_mapinfo *map, int i);
+void			spriter(t_mapinfo *map);
+void			sprite_mapper(t_mapinfo *map);
+void			sprite_sorter(t_mapinfo *map);
 
 #endif

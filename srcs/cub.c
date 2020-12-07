@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:48:54 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 10:28:05 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 20:27:59 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,25 @@ char	**ft_avoidpar(char **map, int i, int size)
 	return (map2);
 }
 
-int		ft_coor(char *buff, t_mapinfo *pinfo)
+int		ft_coor(char *buff, t_mapinfo *map)
 {
 	char		**tmp;
 	int			ret;
 
 	tmp = NULL;
-	if ((pinfo->map = ft_cpymap(buff, pinfo->map)) == NULL)
+	if ((map->map = ft_cpymap(buff, map->map)) == NULL)
 		return (0);
-	ret = ft_mapprocess(pinfo);
+	ret = ft_mapprocess(map);
 	if (ret >= 0)
 	{
-		pinfo->map = ft_cleanmap(pinfo->map);
-		ret = ft_checkmap2(pinfo);
+		map->map = ft_cleanmap(map->map);
+		ret = ft_checkmap2(map);
 	}
 	if (ret >= 0)
 	{
-		tmp = ft_fillmask(pinfo);
-		pinfo->map = ft_deposemask(tmp, pinfo);
-		ret = ret || ft_checkfill(pinfo, 0, 0);
+		tmp = ft_fillmask(map);
+		map->map = ft_deposemask(tmp, map);
+		ret = ret || ft_checkfill(map, 0, 0);
 	}
 	return (ret);
 }

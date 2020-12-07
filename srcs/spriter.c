@@ -6,102 +6,102 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 09:59:30 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 10:05:51 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 20:53:10 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-void	get_sprite_color(t_mapinfo *pinfo, int stripe)
+void	get_sprite_color(t_mapinfo *map, int stripe)
 {
 	int	color;
 	int	y;
 	int	draw;
 
-	pinfo->s_ray.tex_x = (int)((256 * (stripe - (-pinfo->s_ray.width / 2 +
-	pinfo->s_ray.screen_x)) * WIDTH / pinfo->s_ray.width) / 256);
-	if (pinfo->s_ray.transform_y > 0 && stripe > 0 && stripe < pinfo->res_x &&
-	pinfo->s_ray.transform_y < pinfo->spribuf[stripe])
+	map->s_ray.tex_x = (int)((256 * (stripe - (-map->s_ray.width / 2 +
+	map->s_ray.screen_x)) * WIDTH / map->s_ray.width) / 256);
+	if (map->s_ray.transform_y > 0 && stripe > 0 && stripe < map->res_x &&
+	map->s_ray.transform_y < map->spribuf[stripe])
 	{
-		y = pinfo->s_ray.draw_start_y;
-		while (y < pinfo->s_ray.draw_end_y)
+		y = map->s_ray.draw_start_y;
+		while (y < map->s_ray.draw_end_y)
 		{
-			draw = (y - pinfo->s_ray.v_move_screen) * 256 - pinfo->res_y * 128 +
-			pinfo->s_ray.height * 128;
-			pinfo->s_ray.tex_y = ((draw * HEIGHT) / pinfo->s_ray.height) / 256;
-			color = pinfo->tex[4][WIDTH * pinfo->s_ray.tex_y + pinfo->s_ray.tex_x];
+			draw = (y - map->s_ray.v_move_screen) * 256 - map->res_y * 128 +
+			map->s_ray.height * 128;
+			map->s_ray.tex_y = ((draw * HEIGHT) / map->s_ray.height) / 256;
+			color = map->tex[4][WIDTH * map->s_ray.tex_y + map->s_ray.tex_x];
 			if ((color & 0x00FFFFFF) != 0)
-				pinfo->buffer[y][stripe] = color;
+				map->buffer[y][stripe] = color;
 			y++;
 		}
 	}
 }
 
-void	calculate_sprite_width(t_mapinfo *pinfo)
+void	calculate_sprite_width(t_mapinfo *map)
 {
 	int	u_div;
 
 	u_div = 1;
-	pinfo->s_ray.width = (int)fabs((pinfo->res_y / pinfo->s_ray.transform_y) / u_div);
-	pinfo->s_ray.draw_start_x = -pinfo->s_ray.width / 2 + pinfo->s_ray.screen_x;
-	if (pinfo->s_ray.draw_start_x < 0)
-		pinfo->s_ray.draw_start_x = 0;
-	pinfo->s_ray.draw_end_x = pinfo->s_ray.width / 2 + pinfo->s_ray.screen_x;
-	if (pinfo->s_ray.draw_end_x >= pinfo->res_x)
-		pinfo->s_ray.draw_end_x = pinfo->res_x - 1;
+	map->s_ray.width = (int)fabs((map->res_y / map->s_ray.transform_y) / u_div);
+	map->s_ray.draw_start_x = -map->s_ray.width / 2 + map->s_ray.screen_x;
+	if (map->s_ray.draw_start_x < 0)
+		map->s_ray.draw_start_x = 0;
+	map->s_ray.draw_end_x = map->s_ray.width / 2 + map->s_ray.screen_x;
+	if (map->s_ray.draw_end_x >= map->res_x)
+		map->s_ray.draw_end_x = map->res_x - 1;
 }
 
-void	calculate_sprite_height(t_mapinfo *pinfo)
+void	calculate_sprite_height(t_mapinfo *map)
 {
 	int	div;
 
 	div = 1;
-	pinfo->s_ray.height = (int)fabs((pinfo->res_y / pinfo->s_ray.transform_y) / div);
-	pinfo->s_ray.draw_start_y = -pinfo->s_ray.height / 2 + pinfo->res_y / 2 +
-	pinfo->s_ray.v_move_screen;
-	if (pinfo->s_ray.draw_start_y < 0)
-		pinfo->s_ray.draw_start_y = 0;
-	pinfo->s_ray.draw_end_y = pinfo->s_ray.height / 2 + pinfo->res_y / 2 +
-	pinfo->s_ray.v_move_screen;
-	if (pinfo->s_ray.draw_end_y >= pinfo->res_y)
-		pinfo->s_ray.draw_end_y = pinfo->res_y - 1;
+	map->s_ray.height = (int)fabs((map->res_y / map->s_ray.transform_y) / div);
+	map->s_ray.draw_start_y = -map->s_ray.height / 2 + map->res_y / 2 +
+	map->s_ray.v_move_screen;
+	if (map->s_ray.draw_start_y < 0)
+		map->s_ray.draw_start_y = 0;
+	map->s_ray.draw_end_y = map->s_ray.height / 2 + map->res_y / 2 +
+	map->s_ray.v_move_screen;
+	if (map->s_ray.draw_end_y >= map->res_y)
+		map->s_ray.draw_end_y = map->res_y - 1;
 }
 
-void	translating_sprite(t_mapinfo *pinfo, int i)
+void	translating_sprite(t_mapinfo *map, int i)
 {
 	double	mode;
 
 	mode = 0.0;
-	pinfo->s_ray.x = pinfo->sprite[i].x - pinfo->player.pos_x;
-	pinfo->s_ray.y = pinfo->sprite[i].y - pinfo->player.pos_y;
-	pinfo->s_ray.inversion = 1.0 / (pinfo->player.plane_x * pinfo->player.dir_y -
-	pinfo->player.dir_x * pinfo->player.plane_y);
-	pinfo->s_ray.transform_x = pinfo->s_ray.inversion *
-	(pinfo->player.dir_y * pinfo->s_ray.x - pinfo->player.dir_x * pinfo->s_ray.y);
-	pinfo->s_ray.transform_y = pinfo->s_ray.inversion * (-pinfo->player.plane_y *
-	pinfo->s_ray.x + pinfo->player.plane_x * pinfo->s_ray.y);
-	pinfo->s_ray.screen_x = (int)((pinfo->res_x / 2) *
-	(1 + pinfo->s_ray.transform_x / pinfo->s_ray.transform_y));
-	pinfo->s_ray.v_move_screen = (int)(mode / pinfo->s_ray.transform_y);
+	map->s_ray.x = map->sprite[i].x - map->player.pos_x;
+	map->s_ray.y = map->sprite[i].y - map->player.pos_y;
+	map->s_ray.inversion = 1.0 / (map->player.plane_x * map->player.dir_y -
+	map->player.dir_x * map->player.plane_y);
+	map->s_ray.transform_x = map->s_ray.inversion *
+	(map->player.dir_y * map->s_ray.x - map->player.dir_x * map->s_ray.y);
+	map->s_ray.transform_y = map->s_ray.inversion * (-map->player.plane_y *
+	map->s_ray.x + map->player.plane_x * map->s_ray.y);
+	map->s_ray.screen_x = (int)((map->res_x / 2) *
+	(1 + map->s_ray.transform_x / map->s_ray.transform_y));
+	map->s_ray.v_move_screen = (int)(mode / map->s_ray.transform_y);
 }
 
-void	spriter(t_mapinfo *pinfo)
+void	spriter(t_mapinfo *map)
 {
 	int	i;
 	int	stripe;
 
 	i = 0;
-	pinfo->numsprite = pinfo->counter_sprite;
-	sprite_sorter(pinfo);
-	while (i < pinfo->numsprite)
+	map->numsprite = map->counter_sprite;
+	sprite_sorter(map);
+	while (i < map->numsprite)
 	{
-		translating_sprite(pinfo, i);
-		calculate_sprite_height(pinfo);
-		calculate_sprite_width(pinfo);
-		stripe = pinfo->s_ray.draw_start_x;
-		while (stripe < pinfo->s_ray.draw_end_x)
+		translating_sprite(map, i);
+		calculate_sprite_height(map);
+		calculate_sprite_width(map);
+		stripe = map->s_ray.draw_start_x;
+		while (stripe < map->s_ray.draw_end_x)
 		{
-			get_sprite_color(pinfo, stripe);
+			get_sprite_color(map, stripe);
 			stripe++;
 		}
 		i++;

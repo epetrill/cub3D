@@ -6,97 +6,97 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 09:45:26 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 09:50:29 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 21:08:44 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-void	tex_calculation(t_mapinfo *pinfo)
+void	tex_calculation(t_mapinfo *map)
 {
-	if (pinfo->ray.side == 0)
-		pinfo->ray.wall_x = pinfo->player.pos_y + pinfo->ray.perpwalldist *
-		pinfo->ray.raydir_y;
+	if (map->ray.side == 0)
+		map->ray.wall_x = map->player.pos_y + map->ray.perpwalldist *
+		map->ray.raydir_y;
 	else
-		pinfo->ray.wall_x = pinfo->player.pos_x + pinfo->ray.perpwalldist *
-		pinfo->ray.raydir_x;
-	pinfo->ray.wall_x -= floor(pinfo->ray.wall_x);
-	pinfo->ray.tex_x = (int)(pinfo->ray.wall_x * (double)WIDTH);
-	if (pinfo->ray.side == 0 && pinfo->ray.raydir_x > 0)
-		pinfo->ray.tex_x = WIDTH - pinfo->ray.tex_x - 1;
-	if (pinfo->ray.side == 1 && pinfo->ray.raydir_y < 0)
-		pinfo->ray.tex_x = WIDTH - pinfo->ray.tex_x - 1;
-	pinfo->ray.step = 1.0 * HEIGHT / pinfo->ray.lineheight;
-	pinfo->ray.texpos = (pinfo->ray.drawstart - pinfo->res_y / 2 +
-	pinfo->ray.lineheight / 2) * pinfo->ray.step;
+		map->ray.wall_x = map->player.pos_x + map->ray.perpwalldist *
+		map->ray.raydir_x;
+	map->ray.wall_x -= floor(map->ray.wall_x);
+	map->ray.tex_x = (int)(map->ray.wall_x * (double)WIDTH);
+	if (map->ray.side == 0 && map->ray.raydir_x > 0)
+		map->ray.tex_x = WIDTH - map->ray.tex_x - 1;
+	if (map->ray.side == 1 && map->ray.raydir_y < 0)
+		map->ray.tex_x = WIDTH - map->ray.tex_x - 1;
+	map->ray.step = 1.0 * HEIGHT / map->ray.lineheight;
+	map->ray.texpos = (map->ray.drawstart - map->res_y / 2 +
+	map->ray.lineheight / 2) * map->ray.step;
 }
 
-void	wall_height_calculation(t_mapinfo *pinfo)
+void	wall_height_calculation(t_mapinfo *map)
 {
-	pinfo->ray.lineheight = (int)(pinfo->res_y / pinfo->ray.perpwalldist);
-	pinfo->ray.drawstart = -pinfo->ray.lineheight / 2 + pinfo->res_y / 2;
-	if (pinfo->ray.drawstart < 0)
-		pinfo->ray.drawstart = 0;
-	pinfo->ray.drawend = pinfo->ray.lineheight / 2 + pinfo->res_y / 2;
-	if (pinfo->ray.drawend >= pinfo->res_y)
-		pinfo->ray.drawend = pinfo->res_y - 1;
+	map->ray.lineheight = (int)(map->res_y / map->ray.perpwalldist);
+	map->ray.drawstart = -map->ray.lineheight / 2 + map->res_y / 2;
+	if (map->ray.drawstart < 0)
+		map->ray.drawstart = 0;
+	map->ray.drawend = map->ray.lineheight / 2 + map->res_y / 2;
+	if (map->ray.drawend >= map->res_y)
+		map->ray.drawend = map->res_y - 1;
 }
 
-void	wall_distance_calculation(t_mapinfo *pinfo)
+void	wall_distance_calculation(t_mapinfo *map)
 {
-	if (pinfo->ray.side == 0)
-		pinfo->ray.perpwalldist = (pinfo->ray.map_x - pinfo->player.pos_x +
-		(1 - pinfo->ray.step_x) / 2) / pinfo->ray.raydir_x;
+	if (map->ray.side == 0)
+		map->ray.perpwalldist = (map->ray.map_x - map->player.pos_x +
+		(1 - map->ray.step_x) / 2) / map->ray.raydir_x;
 	else
-		pinfo->ray.perpwalldist = (pinfo->ray.map_y - pinfo->player.pos_y +
-		(1 - pinfo->ray.step_y) / 2) / pinfo->ray.raydir_y;
+		map->ray.perpwalldist = (map->ray.map_y - map->player.pos_y +
+		(1 - map->ray.step_y) / 2) / map->ray.raydir_y;
 }
 
-void	hit_analyzing(t_mapinfo *pinfo)
+void	hit_analyzing(t_mapinfo *map)
 {
-	while (pinfo->ray.hit == 0)
+	while (map->ray.hit == 0)
 	{
-		if (pinfo->ray.sidedist_x < pinfo->ray.sidedist_y)
+		if (map->ray.sidedist_x < map->ray.sidedist_y)
 		{
-			pinfo->ray.sidedist_x += pinfo->ray.deltadist_x;
-			pinfo->ray.map_x += pinfo->ray.step_x;
-			pinfo->ray.side = 0;
+			map->ray.sidedist_x += map->ray.deltadist_x;
+			map->ray.map_x += map->ray.step_x;
+			map->ray.side = 0;
 		}
 		else
 		{
-			pinfo->ray.sidedist_y += pinfo->ray.deltadist_y;
-			pinfo->ray.map_y += pinfo->ray.step_y;
-			pinfo->ray.side = 1;
+			map->ray.sidedist_y += map->ray.deltadist_y;
+			map->ray.map_y += map->ray.step_y;
+			map->ray.side = 1;
 		}
-		if (pinfo->map[pinfo->ray.map_y][pinfo->ray.map_x] == '1')
-			pinfo->ray.hit = 1;
+		if (map->map[map->ray.map_y][map->ray.map_x] == '1')
+			map->ray.hit = 1;
 	}
 }
 
-void	step_calculation(t_mapinfo *pinfo)
+void	step_calculation(t_mapinfo *map)
 {
-	if (pinfo->ray.raydir_x < 0)
+	if (map->ray.raydir_x < 0)
 	{
-		pinfo->ray.step_x = -1;
-		pinfo->ray.sidedist_x = (pinfo->player.pos_x - pinfo->ray.map_x) *
-		pinfo->ray.deltadist_x;
+		map->ray.step_x = -1;
+		map->ray.sidedist_x = (map->player.pos_x - map->ray.map_x) *
+		map->ray.deltadist_x;
 	}
 	else
 	{
-		pinfo->ray.step_x = 1;
-		pinfo->ray.sidedist_x = (pinfo->ray.map_x + 1.0 - pinfo->player.pos_x) *
-		pinfo->ray.deltadist_x;
+		map->ray.step_x = 1;
+		map->ray.sidedist_x = (map->ray.map_x + 1.0 - map->player.pos_x) *
+		map->ray.deltadist_x;
 	}
-	if (pinfo->ray.raydir_y < 0)
+	if (map->ray.raydir_y < 0)
 	{
-		pinfo->ray.step_y = -1;
-		pinfo->ray.sidedist_y = (pinfo->player.pos_y - pinfo->ray.map_y) *
-		pinfo->ray.deltadist_y;
+		map->ray.step_y = -1;
+		map->ray.sidedist_y = (map->player.pos_y - map->ray.map_y) *
+		map->ray.deltadist_y;
 	}
 	else
 	{
-		pinfo->ray.step_y = 1;
-		pinfo->ray.sidedist_y = (pinfo->ray.map_y + 1.0 - pinfo->player.pos_y) *
-		pinfo->ray.deltadist_y;
+		map->ray.step_y = 1;
+		map->ray.sidedist_y = (map->ray.map_y + 1.0 - map->player.pos_y) *
+		map->ray.deltadist_y;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 07:01:32 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/01 21:13:51 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 21:08:31 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,4 @@ char	**ft_realloc(char **map, int size)
 	tmp[size] = NULL;
 	ft_freetab(map);
 	return (tmp);
-}
-
-void	ft_afftab(char **map)
-{
-	int i;
-
-	i = 0;
-	while (map[i])
-	{
-		printf("|%s|\n", map[i]);
-		i++;
-	}
 }

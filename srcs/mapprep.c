@@ -6,28 +6,28 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:58:21 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/06 03:01:29 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 20:57:16 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-int			ft_reachc(char *line, t_mapinfo *pinfo)
+int			ft_reachc(char *line, t_mapinfo *map)
 {
-	if (pinfo->ceil_r == -1 && pinfo->ceil_g == -1 && pinfo->ceil_b == -1)
+	if (map->ceil_r == -1 && map->ceil_g == -1 && map->ceil_b == -1)
 	{
 		line++;
 		while (*line == ' ')
 			line++;
-		pinfo->ceil_r = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		map->ceil_r = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
 		line = line + ft_nblen(line);
 		while (*line == ' ')
 			line++;
-		pinfo->ceil_g = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		map->ceil_g = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
 		line = line + ft_nblen(line);
 		while (*line == ' ')
 			line++;
-		pinfo->ceil_b = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		map->ceil_b = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
 	}
 	else
 	{
@@ -37,18 +37,18 @@ int			ft_reachc(char *line, t_mapinfo *pinfo)
 	return (0);
 }
 
-int			ft_reachres(char *line, t_mapinfo *pinfo)
+int			ft_reachres(char *line, t_mapinfo *map)
 {
-	if (pinfo->res_x == -1 && pinfo->res_y == -1)
+	if (map->res_x == -1 && map->res_y == -1)
 	{
 		line++;
 		while (*line == ' ')
 			line++;
-		pinfo->res_x = ft_atoimod(line, 0); 
+		map->res_x = ft_atoimod(line, 0);
 		line = line + ft_nblen(line);
 		while (*line == ' ')
 			line++;
-		pinfo->res_y = ft_atoimod(line, 0);
+		map->res_y = ft_atoimod(line, 0);
 		return (1);
 	}
 	else
@@ -58,22 +58,22 @@ int			ft_reachres(char *line, t_mapinfo *pinfo)
 	}
 }
 
-int			ft_reachf(char *line, t_mapinfo *pinfo)
+int			ft_reachf(char *line, t_mapinfo *map)
 {
-	if (pinfo->floor_r == -1 && pinfo->floor_g == -1 && pinfo->floor_b == -1)
+	if (map->floor_r == -1 && map->floor_g == -1 && map->floor_b == -1)
 	{
 		line++;
 		while (*line == ' ')
 			line++;
-		pinfo->floor_r = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		map->floor_r = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
 		line = line + ft_nblen(line);
 		while (*line == ' ')
 			line++;
-		pinfo->floor_g = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		map->floor_g = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
 		line = line + ft_nblen(line);
 		while (*line == ' ')
 			line++;
-		pinfo->floor_b = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
+		map->floor_b = (ft_atoimod(line, 1) >= 0) ? ft_atoimod(line, 1) : -1;
 		return (0);
 	}
 	else
@@ -83,7 +83,7 @@ int			ft_reachf(char *line, t_mapinfo *pinfo)
 	}
 }
 
-int			ft_reachwall(char *line, t_mapinfo *pinfo, int chx)
+int			ft_reachwall(char *line, t_mapinfo *map, int chx)
 {
 	int ret;
 
@@ -91,28 +91,28 @@ int			ft_reachwall(char *line, t_mapinfo *pinfo, int chx)
 	line = line + 2;
 	while (*line == ' ')
 		line++;
-	ret = ft_fillpath(line, pinfo, chx);
+	ret = ft_fillpath(line, map, chx);
 	if (ret < 0)
 		return (-4);
 	line = line + ft_wlen(line);
 	return (0);
 }
 
-int			ft_reachinf(char *line, t_mapinfo *pinfo)
+int			ft_reachinf(char *line, t_mapinfo *map)
 {
 	int ret;
 
 	ret = ft_isparam(line);
 	if (ret == 1)
-		ret = ft_reachres(line, pinfo);
+		ret = ft_reachres(line, map);
 	else if (ret > 2)
-		ret = ft_reachwall(line, pinfo, ret);
+		ret = ft_reachwall(line, map, ret);
 	else if (ret == 2)
 	{
 		if (*line == 'C')
-			ret = ft_reachc(line, pinfo);
+			ret = ft_reachc(line, map);
 		else
-			ret = ft_reachf(line, pinfo);
+			ret = ft_reachf(line, map);
 	}
 	if (ret < 0)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 06:52:36 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/07 02:44:27 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 20:36:02 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,38 +19,36 @@ char		**ft_error(char *str)
 	return (NULL);
 }
 
-int			ft_checkinf(t_mapinfo *pinfo)
+int			ft_checkinf(t_mapinfo *map)
 {
-	if (pinfo->res_x < 0 || pinfo->res_y < 0 || pinfo->north == NULL
-		|| pinfo->south == NULL || pinfo->floor_g < 0 || pinfo->floor_r < 0
-		|| pinfo->south == NULL || pinfo->east == NULL || pinfo->west == NULL
-		|| pinfo->sprite == NULL || pinfo->floor_b < 0 || pinfo->ceil_b < 0
-		|| pinfo->ceil_g < 0 || pinfo->ceil_r < 0)
+	if (map->res_x < 0 || map->res_y < 0 || map->north == NULL
+		|| map->south == NULL || map->floor_g < 0 || map->floor_r < 0
+		|| map->south == NULL || map->east == NULL || map->west == NULL
+		|| map->sprite == NULL || map->floor_b < 0 || map->ceil_b < 0
+		|| map->ceil_g < 0 || map->ceil_r < 0)
 		return (-1);
-	else if (pinfo->floor_r > 255 || pinfo->floor_g > 255
-		|| pinfo->floor_b > 255 || pinfo->ceil_r > 255
-		|| pinfo->ceil_g > 255 || pinfo->ceil_b > 255)
+	else if (map->floor_r > 255 || map->floor_g > 255
+		|| map->floor_b > 255 || map->ceil_r > 255
+		|| map->ceil_g > 255 || map->ceil_b > 255)
 		return (-1);
 	return (0);
 }
 
-int			ft_checkmap(int start, int i, t_mapinfo *pinfo)
+int			ft_checkmap(int start, int i, t_mapinfo *map)
 {
 	int j;
 
-	while (pinfo->map[i])
+	while (map->map[i])
 	{
 		j = 0;
-		while (pinfo->map[i][j] != '\n' && pinfo->map[i][j])
+		while (map->map[i][j] != '\n' && map->map[i][j])
 		{
-			if (start == 0 && (pinfo->map[i][j] == 'N' || pinfo->map[i][j] == 'S'
-				|| pinfo->map[i][j] == 'W' || pinfo->map[i][j] == 'E'))
+			if (start == 0 && (ft_iscardi(map->map[i][j])))
 			{
 				start = 1;
-				ft_startpos(pinfo, pinfo->map[i][j], i, j);
+				ft_startpos(map, map->map[i][j], i, j);
 			}
-			else if (start == 1 && (pinfo->map[i][j] == 'N' || pinfo->map[i][j] == 'S'
-				|| pinfo->map[i][j] == 'W' || pinfo->map[i][j] == 'E'))
+			else if (start == 1 && (ft_iscardi(map->map[i][j])))
 			{
 				ft_putstr("Plusieurs positions de depart !\n");
 				return (-1);
@@ -62,21 +60,21 @@ int			ft_checkmap(int start, int i, t_mapinfo *pinfo)
 	return (0);
 }
 
-int			ft_checkmap2(t_mapinfo *pinfo)
+int			ft_checkmap2(t_mapinfo *map)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	while (pinfo->map[i])
+	while (map->map[i])
 	{
 		j = 0;
-		while (pinfo->map[i][j] != '\n' && pinfo->map[i][j])
+		while (map->map[i][j] != '\n' && map->map[i][j])
 		{
-			if (pinfo->map[i][j] != '1' && pinfo->map[i][j] != '0' && pinfo->map[i][j] != 'N'
-				&& pinfo->map[i][j] != 'S' && pinfo->map[i][j] != 'W' && pinfo->map[i][j] != 'E'
-				&& pinfo->map[i][j] != ' ' && pinfo->map[i][j] != '\n' && pinfo->map[i][j] != '2')
+			if (map->map[i][j] != '1' && map->map[i][j] != '0' &&
+			!(ft_iscardi(map->map[i][j])) && map->map[i][j] != ' '
+			&& map->map[i][j] != '\n' && map->map[i][j] != '2')
 			{
 				ft_putstr("Caractere impossible dans la map !\n");
 				return (-1);
@@ -85,22 +83,22 @@ int			ft_checkmap2(t_mapinfo *pinfo)
 		}
 		i++;
 	}
-	return (ft_checkmap(0, 0, pinfo));
+	return (ft_checkmap(0, 0, map));
 }
 
-int			*ft_colmax(t_mapinfo *pinfo)
+int			*ft_colmax(t_mapinfo *map)
 {
 	int i;
 
 	i = 0;
-	while (pinfo->map[pinfo->lign])
+	while (map->map[map->lign])
 	{
 		i = 0;
-		while (pinfo->map[pinfo->lign][i] != '\n' && pinfo->map[pinfo->lign][i])
+		while (map->map[map->lign][i] != '\n' && map->map[map->lign][i])
 			i++;
-		if (i > pinfo->col)
-			pinfo->col = i;
-		pinfo->lign++;
+		if (i > map->col)
+			map->col = i;
+		map->lign++;
 	}
 	return (0);
 }

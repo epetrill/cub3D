@@ -6,7 +6,7 @@
 /*   By: epetrill <epetrill@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 21:52:52 by epetrill          #+#    #+#             */
-/*   Updated: 2020/12/01 22:25:14 by epetrill         ###   ########lyon.fr   */
+/*   Updated: 2020/12/07 21:17:59 by epetrill         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 100
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100
+# endif
 
 int		ft_read(int fd, char **res, char *buffer);
 int		ft_rest(char *res, char *buffer);
